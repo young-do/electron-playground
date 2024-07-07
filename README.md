@@ -17,3 +17,13 @@
   - 설치 파일 쉽게 되는지 확인 필요
 - [ ] 시스템 자동 시작 설정
   - 시스템 시작시 자동으로 실행되는지 확인 필요
+
+## 우선순위
+
+- tray icon 만들기
+- 타이머 백그라운드
+
+## 참고
+
+- https://www.electronjs.org/docs/tutorial/quick-start
+- https://github.com/kevinsawicki/tray-example
