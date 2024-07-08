@@ -1,4 +1,5 @@
 import ReactDOM from 'react-dom/client';
 import './index.css';
+import { Home } from './pages/home';
 
-ReactDOM.createRoot(document.querySelector('#app')!).render(<h2>Hello from React!</h2>);
+ReactDOM.createRoot(document.querySelector('#app')!).render(<Home />);
