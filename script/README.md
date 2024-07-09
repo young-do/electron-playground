@@ -12,3 +12,7 @@
 
 - 개발 학습 및 개인적인 용도로만 사용합니다.
 - 이미지 저작권은 원 저작자에게 있습니다.
+
+## 참고
+
+- icon 사이즈: https://bjango.com/articles/designingmenubarextras/

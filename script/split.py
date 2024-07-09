@@ -21,10 +21,10 @@ with Image.open(gif_path) as img:
     frame = 0
     while True:
         try:
-            # 프레임을 22x22로 리사이즈
-            # width, height = img.size
+            # 프레임을 22x22로 리사이즈 (만약, 정사각형이 아니라면 세로를 기준으로 리사이즈)
+            width, height = img.size
             new_height = 22
-            new_width = 22
+            new_width = int((new_height / height) * width)
             img_resized = img.resize((new_width, new_height), Image.LANCZOS)
             # img_resized2x = img.resize((new_width * 2, new_height * 2), Image.LANCZOS)
 
