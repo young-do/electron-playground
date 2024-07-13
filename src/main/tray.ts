@@ -1,4 +1,4 @@
-import { Menu, NativeImage, nativeImage, Tray } from 'electron';
+import { Menu, NativeImage, nativeImage, Tray, BrowserWindow } from 'electron';
 import { join } from 'path';
 
 const createIconGetter = (start: number, end: number, gifname: string) => {
@@ -20,7 +20,7 @@ const createIconGetter = (start: number, end: number, gifname: string) => {
   };
 };
 
-export const createTray = () => {
+export const createTray = (window: BrowserWindow) => {
   const getIcon = createIconGetter(0, 10, 'partyparrot');
   const tray = new Tray(getIcon());
   const interval = 100;
@@ -38,6 +38,7 @@ export const createTray = () => {
   };
 
   const contextMenu = Menu.buildFromTemplate([
+    { label: 'show', click: () => window.show() },
     { label: 'start', click: start },
     { label: 'stop', click: stop },
     { label: 'quit', role: 'quit' },
