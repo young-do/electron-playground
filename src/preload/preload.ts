@@ -6,6 +6,7 @@ import { IElectronAPI } from '../../interface.d';
 
 const electronAPI: IElectronAPI = {
   showWindow: () => ipcRenderer.send('show-window'),
+  showNotification: () => ipcRenderer.send('show-notification'),
 };
 
 contextBridge.exposeInMainWorld('electronAPI', electronAPI);

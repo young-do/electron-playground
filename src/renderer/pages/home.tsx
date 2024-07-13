@@ -13,6 +13,16 @@ export const Home = () => {
     setStarted(false);
   };
 
+  const showNotification = () => {
+    new Notification('🍅 Pomodoro Timer 🍅', {
+      body: '10분이 지났습니다!',
+    });
+  };
+
+  const showNotificationDesktop = () => {
+    window.electronAPI.showNotification();
+  };
+
   useEffect(() => {
     if (!started) return;
 
@@ -43,6 +53,8 @@ export const Home = () => {
       <h2>{formatTime(second)}</h2>
       <button onClick={reset}>초기화</button>
       <button onClick={() => setStarted(!started)}>{started ? '중지' : '시작'}</button>
+      <button onClick={showNotification}>알림 테스트 (web)</button>
+      <button onClick={showNotificationDesktop}>알림 테스트 (desktop)</button>
     </div>
   );
 };

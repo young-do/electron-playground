@@ -2,6 +2,7 @@
 
 export interface IElectronAPI {
   showWindow: () => void;
+  showNotification: () => void;
 }
 
 declare global {

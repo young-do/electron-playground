@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain } from 'electron';
+import { app, BrowserWindow, ipcMain, Notification } from 'electron';
 import { createTray } from './tray';
 import { createWindow } from './window';
 
@@ -41,5 +41,12 @@ app.whenReady().then(() => {
 
   ipcMain.on('show-window', () => {
     mainWindow?.show();
+  });
+  ipcMain.on('show-notification', () => {
+    // @see: https://www.electronjs.org/docs/latest/api/notification
+    new Notification({
+      title: '🍅 Pomodoro Timer (desktop) 🍅',
+      body: '10분이 지났습니다!',
+    }).show();
   });
 });
