@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-const TEN_MINUTES = 10 * 60 * 1000;
+const TEN_MINUTES = 5000; //10 * 60 * 1000;
 const initialTime = TEN_MINUTES;
 
 export const Home = () => {
@@ -25,6 +25,7 @@ export const Home = () => {
       if (remainingTime <= 0) {
         clearInterval(interval);
         setSecond(0);
+        window.electronAPI.showWindow();
       } else {
         setSecond(remainingTime);
       }
