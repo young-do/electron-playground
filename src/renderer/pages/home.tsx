@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import HomeIcon from '../assets/svgs/home.svg?react';
 
 const TEN_MINUTES = 5000; //10 * 60 * 1000;
 const initialTime = TEN_MINUTES;
@@ -44,11 +45,14 @@ export const Home = () => {
     update();
 
     return () => clearInterval(interval);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [started]);
 
   return (
     <div>
-      <h1>🍅 Pomodoro Timer 🍅</h1>
+      <h1>
+        🍅 Pomodoro Timer 🍅 <HomeIcon />
+      </h1>
       <h2>{finished && '끝!'}</h2>
       <h2>{formatTime(second)}</h2>
       <button onClick={reset}>초기화</button>
