@@ -59,6 +59,7 @@ export const Home = () => {
       <button onClick={() => setStarted(!started)}>{started ? '중지' : '시작'}</button>
       <button onClick={showNotification}>알림 테스트 (web)</button>
       <button onClick={showNotificationDesktop}>알림 테스트 (desktop)</button>
+      <Locker />
     </div>
   );
 };
@@ -70,4 +71,32 @@ export const formatTime = (time: number): string => {
   const seconds = Math.floor((time % 60000) / 1000);
 
   return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+};
+
+const Locker = () => {
+  const [password, setPassword] = useState('');
+  const [message, setMessage] = useState('');
+
+  const savePassword = () => {
+    const result = window.electronAPI.savePassword(password);
+    console.log('!!', result);
+
+    setMessage('Password saved.');
+  };
+
+  const verifyPassword = () => {
+    const result = window.electronAPI.verifyPassword(password);
+    console.log('@@', result);
+    setMessage(result.ok ? 'Password is correct.' : 'Password is incorrect.');
+  };
+
+  return (
+    <div>
+      <h1>Locker</h1>
+      <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+      <button onClick={savePassword}>Save</button>
+      <button onClick={verifyPassword}>Verify</button>
+      <p>{message}</p>
+    </div>
+  );
 };

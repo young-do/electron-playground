@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain, Notification } from 'electron';
+import { app, BrowserWindow, ipcMain, Notification, safeStorage } from 'electron';
 import { createTray } from './tray';
 import { createWindow } from './window';
 
@@ -36,6 +36,9 @@ app.on('activate', () => {
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
 
+// 별도 파일에 저장하지 않고 1회적으로 암호화된 비밀번호를 저장하기 위한 변수
+let temporallyEncryptedPassword: Buffer;
+
 app.whenReady().then(() => {
   createTray(mainWindow);
 
@@ -48,5 +51,25 @@ app.whenReady().then(() => {
       title: '🍅 Pomodoro Timer (desktop) 🍅',
       body: '10분이 지났습니다!',
     }).show();
+  });
+  ipcMain.on('save-password', (event, password) => {
+    if (safeStorage.isEncryptionAvailable()) {
+      temporallyEncryptedPassword = safeStorage.encryptString(password);
+      event.returnValue = { ok: true };
+    } else {
+      event.returnValue = { ok: false };
+    }
+  });
+  ipcMain.on('verify-password', (event, password) => {
+    if (!temporallyEncryptedPassword) {
+      event.returnValue = { ok: false };
+      return;
+    }
+    const decryptedPassword = safeStorage.decryptString(temporallyEncryptedPassword);
+    if (password === decryptedPassword) {
+      event.returnValue = { ok: true };
+    } else {
+      event.returnValue = { ok: false };
+    }
   });
 });

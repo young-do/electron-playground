@@ -3,6 +3,8 @@
 export interface IElectronAPI {
   showWindow: () => void;
   showNotification: () => void;
+  savePassword: (password: string) => { ok: boolean };
+  verifyPassword: (password: string) => { ok: boolean };
 }
 
 declare global {
