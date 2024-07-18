@@ -1,4 +1,12 @@
 import { useEffect, useState } from 'react';
+import { initializeApp } from 'firebase/app';
+import {
+  getAuth,
+  onAuthStateChanged,
+  signInAnonymously,
+  User as FirebaseUser,
+  signOut,
+} from 'firebase/auth';
 import HomeIcon from '../assets/svgs/home.svg?react';
 
 const TEN_MINUTES = 5000; //10 * 60 * 1000;
@@ -60,6 +68,7 @@ export const Home = () => {
       <button onClick={showNotification}>알림 테스트 (web)</button>
       <button onClick={showNotificationDesktop}>알림 테스트 (desktop)</button>
       <Locker />
+      <AnonymousAuth />
     </div>
   );
 };
@@ -97,6 +106,54 @@ const Locker = () => {
       <button onClick={savePassword}>Save</button>
       <button onClick={verifyPassword}>Verify</button>
       <p>{message}</p>
+    </div>
+  );
+};
+
+const AnonymousAuth = () => {
+  const [user, setUser] = useState<FirebaseUser | null>(null);
+
+  useEffect(() => {
+    window.onstorage = (e) => {
+      console.log('storage event', e);
+    };
+
+    const app = initializeApp({
+      apiKey: 'AIzaSyCCCWY6sbqrROPyffnI4_94x16wNAmWou8',
+      authDomain: 'sample-6ef3c.firebaseapp.com',
+      projectId: 'sample-6ef3c',
+      storageBucket: 'sample-6ef3c.appspot.com',
+      messagingSenderId: '454155517545',
+      appId: '1:454155517545:web:8ad8391b799aa914996cf8',
+      measurementId: 'G-C58RKE0MXR',
+    });
+    const auth = getAuth(app);
+
+    // 새로고침해도 계속 동일한 uid를 가지는 이유
+    // ㄴ indexedDB에 저장되어 있기 때문
+    signInAnonymously(auth)
+      .then((value) => {
+        // Signed in..
+        console.log('signed in', value);
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // ...
+        console.error('error', error, errorCode, errorMessage);
+      });
+
+    onAuthStateChanged(auth, (user) => {
+      setUser(user);
+      console.log('user', user);
+    });
+  }, []);
+
+  return (
+    <div>
+      <h1>Anonymous auth</h1>
+      <p>user is {user ? `signed in with uid = "${user.uid}"` : 'signed out'}</p>
+      <button onClick={() => signOut(getAuth())}>sign out</button>
     </div>
   );
 };
