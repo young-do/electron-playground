@@ -69,6 +69,7 @@ export const Home = () => {
       <button onClick={showNotificationDesktop}>알림 테스트 (desktop)</button>
       <Locker />
       <AnonymousAuth />
+      <MachineId />
     </div>
   );
 };
@@ -154,6 +155,24 @@ const AnonymousAuth = () => {
       <h1>Anonymous auth</h1>
       <p>user is {user ? `signed in with uid = "${user.uid}"` : 'signed out'}</p>
       <button onClick={() => signOut(getAuth())}>sign out</button>
+    </div>
+  );
+};
+
+const MachineId = () => {
+  const [id, setId] = useState('');
+
+  useEffect(() => {
+    if (!window.electronAPI) return;
+
+    const id = window.electronAPI.getMachineId();
+    setId(id);
+  }, []);
+
+  return (
+    <div>
+      <h1>Machine Id</h1>
+      <p>user machine id is "{id || '...'}"</p>
     </div>
   );
 };

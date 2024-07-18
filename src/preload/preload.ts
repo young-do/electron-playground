@@ -9,6 +9,7 @@ const electronAPI: IElectronAPI = {
   showNotification: () => ipcRenderer.send('show-notification'),
   savePassword: (password: string) => ipcRenderer.sendSync('save-password', password),
   verifyPassword: (password: string) => ipcRenderer.sendSync('verify-password', password),
+  getMachineId: () => ipcRenderer.sendSync('get-machine-id'),
 };
 
 contextBridge.exposeInMainWorld('electronAPI', electronAPI);

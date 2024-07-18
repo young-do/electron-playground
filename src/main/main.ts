@@ -1,6 +1,7 @@
 import { app, BrowserWindow, ipcMain, Notification, safeStorage } from 'electron';
 import { createTray } from './tray';
 import { createWindow } from './window';
+import { machineIdSync } from 'node-machine-id';
 
 let mainWindow: BrowserWindow | null = null;
 
@@ -71,5 +72,8 @@ app.whenReady().then(() => {
     } else {
       event.returnValue = { ok: false };
     }
+  });
+  ipcMain.on('get-machine-id', (event) => {
+    event.returnValue = machineIdSync(true);
   });
 });

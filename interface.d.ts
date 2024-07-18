@@ -5,6 +5,7 @@ export interface IElectronAPI {
   showNotification: () => void;
   savePassword: (password: string) => { ok: boolean };
   verifyPassword: (password: string) => { ok: boolean };
+  getMachineId: () => string;
 }
 
 declare global {
