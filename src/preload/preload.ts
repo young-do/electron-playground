@@ -7,9 +7,9 @@ import { IElectronAPI } from '../../interface.d';
 const electronAPI: IElectronAPI = {
   showWindow: () => ipcRenderer.send('show-window'),
   showNotification: () => ipcRenderer.send('show-notification'),
-  savePassword: (password: string) => ipcRenderer.sendSync('save-password', password),
-  verifyPassword: (password: string) => ipcRenderer.sendSync('verify-password', password),
-  getMachineId: () => ipcRenderer.sendSync('get-machine-id'),
+  savePassword: (password: string) => ipcRenderer.invoke('save-password', password),
+  verifyPassword: (password: string) => ipcRenderer.invoke('verify-password', password),
+  getMachineId: () => ipcRenderer.invoke('get-machine-id'),
 };
 
 contextBridge.exposeInMainWorld('electronAPI', electronAPI);

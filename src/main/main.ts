@@ -1,7 +1,7 @@
 import { app, BrowserWindow, ipcMain, Notification, safeStorage } from 'electron';
 import { createTray } from './tray';
 import { createWindow } from './window';
-import { machineIdSync } from 'node-machine-id';
+import { machineId } from 'node-machine-id';
 
 let mainWindow: BrowserWindow | null = null;
 
@@ -53,27 +53,26 @@ app.whenReady().then(() => {
       body: '10분이 지났습니다!',
     }).show();
   });
-  ipcMain.on('save-password', (event, password) => {
+  ipcMain.handle('save-password', (event, password) => {
     if (safeStorage.isEncryptionAvailable()) {
       temporallyEncryptedPassword = safeStorage.encryptString(password);
-      event.returnValue = { ok: true };
+      return { ok: true };
     } else {
-      event.returnValue = { ok: false };
+      return { ok: false };
     }
   });
-  ipcMain.on('verify-password', (event, password) => {
+  ipcMain.handle('verify-password', (event, password) => {
     if (!temporallyEncryptedPassword) {
-      event.returnValue = { ok: false };
-      return;
+      return { ok: false };
     }
     const decryptedPassword = safeStorage.decryptString(temporallyEncryptedPassword);
     if (password === decryptedPassword) {
-      event.returnValue = { ok: true };
+      return { ok: true };
     } else {
-      event.returnValue = { ok: false };
+      return { ok: false };
     }
   });
-  ipcMain.on('get-machine-id', (event) => {
-    event.returnValue = machineIdSync(true);
+  ipcMain.handle('get-machine-id', async () => {
+    return await machineId(true);
   });
 });

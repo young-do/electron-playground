@@ -87,15 +87,15 @@ const Locker = () => {
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
 
-  const savePassword = () => {
-    const result = window.electronAPI.savePassword(password);
+  const savePassword = async () => {
+    const result = await window.electronAPI.savePassword(password);
     console.log('!!', result);
 
     setMessage('Password saved.');
   };
 
-  const verifyPassword = () => {
-    const result = window.electronAPI.verifyPassword(password);
+  const verifyPassword = async () => {
+    const result = await window.electronAPI.verifyPassword(password);
     console.log('@@', result);
     setMessage(result.ok ? 'Password is correct.' : 'Password is incorrect.');
   };
@@ -165,8 +165,7 @@ const MachineId = () => {
   useEffect(() => {
     if (!window.electronAPI) return;
 
-    const id = window.electronAPI.getMachineId();
-    setId(id);
+    window.electronAPI.getMachineId().then((id) => setId(id));
   }, []);
 
   return (
