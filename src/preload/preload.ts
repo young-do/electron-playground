@@ -2,7 +2,7 @@
 // https://www.electronjs.org/docs/latest/tutorial/process-model#preload-scripts
 
 import { contextBridge, ipcRenderer } from 'electron';
-import { IElectronAPI } from '../../interface.d';
+import { IElectronAPI } from '../renderer/vite-env.d';
 
 const electronAPI: IElectronAPI = {
   showWindow: () => ipcRenderer.send('show-window'),

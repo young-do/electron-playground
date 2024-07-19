@@ -120,7 +120,7 @@ const AnonymousAuth = () => {
     };
 
     const app = initializeApp({
-      apiKey: 'AIzaSyCCCWY6sbqrROPyffnI4_94x16wNAmWou8',
+      apiKey: import.meta.env.VITE_APP_FIREBASE_API_KEY,
       authDomain: 'sample-6ef3c.firebaseapp.com',
       projectId: 'sample-6ef3c',
       storageBucket: 'sample-6ef3c.appspot.com',
