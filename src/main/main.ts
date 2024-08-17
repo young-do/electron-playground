@@ -2,6 +2,14 @@ import { app, BrowserWindow, ipcMain, Notification, safeStorage } from 'electron
 import { createTray } from './tray';
 import { createWindow } from './window';
 import { machineId } from 'node-machine-id';
+import { updateElectronApp, UpdateSourceType } from 'update-electron-app';
+
+updateElectronApp({
+  updateSource: {
+    type: UpdateSourceType.ElectronPublicUpdateService,
+    repo: 'young-do/electron-playground',
+  },
+});
 
 let mainWindow: BrowserWindow | null = null;
 
