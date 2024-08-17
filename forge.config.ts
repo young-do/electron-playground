@@ -55,6 +55,7 @@ const config: ForgeConfig = {
           owner: 'young-do',
           name: 'electron-playground',
         },
+        draft: true,
       },
     },
   ],
